@@ -16,7 +16,7 @@ source:
   sha256: 49b5f0495cd681cbcb5296a4476853d4aea19a43bdd9f179c928a977308a0617
   patches:
     - 0001-rebatch-constants.patch
-    - 0002-do-not-include-B-usr-bin-flag.patch  # [tflow_variant == 'gpu']
+    - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
     - 58b236b235ce57808c917feb19b9f895f628710c.diff
 
 build:
@@ -32,14 +32,15 @@ requirements:
     - {{ compiler('cxx') }}
     - bazel
     - git
+    - rsync
   host:
-    - cudatoolkit {{ cudatoolkit }}*  # [tflow_variant == 'gpu']
-    - cudnn {{ cudnn }}*  # [tflow_variant == 'gpu']
-    - cupti  # [not win and tflow_variant == 'gpu']
+    - cudatoolkit {{ cudatoolkit }}*  # [cuda_compiler_version != 'None']
+    - cudnn {{ cudnn }}*  # [cuda_compiler_version != 'None']
+    - cupti  # [cuda_compiler_version != 'None']
   run:
-    - {{ pin_compatible('cudatoolkit', max_pin='x.x') }}  # [tflow_variant == 'gpu']
-    - {{ pin_compatible('cudnn') }}  # [tflow_variant == 'gpu']
-    - cupti  # [not win and tflow_variant == 'gpu']
+    - {{ pin_compatible('cudatoolkit', max_pin='x.x') }}  # [cuda_compiler_version != 'None']
+    - {{ pin_compatible('cudnn') }}  # [cuda_compiler_version != 'None']
+    - cupti  # [cuda_compiler_version != 'None']
 
 test:
   files:
