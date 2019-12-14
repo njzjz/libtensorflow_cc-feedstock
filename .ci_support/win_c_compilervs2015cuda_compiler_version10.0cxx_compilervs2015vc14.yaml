@@ -1,0 +1,23 @@
+c_compiler:
+- vs2015
+c_compiler_version:
+- '5.4'
+channel_sources:
+- deepmodeling,defaults
+channel_targets:
+- deepmodeling main
+cuda_compiler_version:
+- '10.0'
+cxx_compiler:
+- vs2015
+cxx_compiler_version:
+- '5.4'
+pin_run_as_build:
+  vc:
+    max_pin: x
+vc:
+- '14'
+zip_keys:
+- - vc
+  - c_compiler
+  - cxx_compiler
