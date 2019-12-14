@@ -25,7 +25,7 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
+          <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=4&branchName=master">
             <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master">
           </a>
         </summary>
@@ -34,49 +34,33 @@ Current build status
           <tbody><tr>
               <td>linux_cuda_compiler_version10.0</td>
               <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
+                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=4&branchName=master">
                   <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=linux&configuration=linux_cuda_compiler_version10.0" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_cuda_compiler_versionNone</td>
               <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
+                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=4&branchName=master">
                   <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=linux&configuration=linux_cuda_compiler_versionNone" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_cuda_compiler_version10.0</td>
-              <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
-                  <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=osx&configuration=osx_cuda_compiler_version10.0" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_cuda_compiler_versionNone</td>
-              <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
-                  <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=osx&configuration=osx_cuda_compiler_versionNone" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015cuda_compiler_version10.0cxx_compilervs2015vc14</td>
-              <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
-                  <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015cuda_compiler_version10.0cxx_compilervs2015vc14" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015cuda_compiler_versionNonecxx_compilervs2015vc14</td>
-              <td>
-                <a href="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_build/latest?definitionId=&branchName=master">
-                  <img src="https://dev.azure.com/deepmd-kit-recipes/feedstock-builds/_apis/build/status/libtensorflow_cc-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015cuda_compiler_versionNonecxx_compilervs2015vc14" alt="variant">
                 </a>
               </td>
             </tr>
           </tbody>
         </table>
       </details>
+    </td>
+  </tr>
+  <tr>
+    <td>OSX</td>
+    <td>
+      <img src="https://img.shields.io/badge/OSX-disabled-lightgrey.svg" alt="OSX disabled">
+    </td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td>
+      <img src="https://img.shields.io/badge/Windows-disabled-lightgrey.svg" alt="Windows disabled">
     </td>
   </tr>
   <tr>

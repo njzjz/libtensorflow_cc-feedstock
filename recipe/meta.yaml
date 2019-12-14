@@ -24,6 +24,7 @@ build:
   string: {{ tflow_variant }}_h{{PKG_HASH}}_{{ PKG_BUILDNUM }}
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
+  skip: True  # [not linux]
 
 requirements:
   build:
