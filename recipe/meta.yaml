@@ -1,5 +1,10 @@
 {% set version = "2.0.0" %}
 
+{% if cuda_compiler_version == "None" %}
+{% set tflow_variant = "cpu" %}
+{% else %}
+{% set tflow_variant = "gpu" %}
+{% endif %}
 # This is the recipe for the "gpu" variant of tensorflow-base
 package:
   name: libtensorflow_cc
@@ -11,11 +16,12 @@ source:
   sha256: 49b5f0495cd681cbcb5296a4476853d4aea19a43bdd9f179c928a977308a0617
   patches:
     - 0001-rebatch-constants.patch
+    - 0002-do-not-include-B-usr-bin-flag.patch  # [tflow_variant == 'gpu']
     - 58b236b235ce57808c917feb19b9f895f628710c.diff
 
 build:
   number: 0
-  string: cpu_h{{PKG_HASH}}_{{ PKG_BUILDNUM }}
+  string: {{ tflow_variant }}_h{{PKG_HASH}}_{{ PKG_BUILDNUM }}
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
 
@@ -25,6 +31,14 @@ requirements:
     - {{ compiler('cxx') }}
     - bazel
     - git
+  host:
+    - cudatoolkit {{ cudatoolkit }}*  # [tflow_variant == 'gpu']
+    - cudnn {{ cudnn }}*  # [tflow_variant == 'gpu']
+    - cupti  # [not win and tflow_variant == 'gpu']
+  run:
+    - {{ pin_compatible('cudatoolkit', max_pin='x.x') }}  # [tflow_variant == 'gpu']
+    - {{ pin_compatible('cudnn') }}  # [tflow_variant == 'gpu']
+    - cupti  # [not win and tflow_variant == 'gpu']
 
 test:
   files:

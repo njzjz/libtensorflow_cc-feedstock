@@ -1,6 +1,15 @@
-tflow_variant:
-- cpu
 c_compiler_version:
 - 5.4
 cxx_compiler_version:
 - 5.4
+cudatoolkit:
+- 10.0
+cudnn:
+- 7.6
+channel_sources:
+- deepmodeling,defaults
+channel_targets:
+- deepmodeling main
+cuda_compiler_version:  
+- None
+- 10.0  
