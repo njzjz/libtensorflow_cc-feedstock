@@ -17,7 +17,7 @@ source:
   patches:
     - 0001-rebatch-constants.patch
     - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
-    - 58b236b235ce57808c917feb19b9f895f628710c.diff
+    #- 58b236b235ce57808c917feb19b9f895f628710c.diff
 
 build:
   number: 0
