@@ -10,12 +10,20 @@ cuda_compiler:
 - nvcc
 cuda_compiler_version:
 - None
+cudatoolkit:
+- '10.0'
+cudnn:
+- '7.6'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
 - '5.4'
 docker_image:
 - condaforge/linux-anvil-comp7
+pin_run_as_build:
+  cudnn:
+    min_pin: x.x
+    max_pin: x
 zip_keys:
 - - cuda_compiler_version
   - docker_image
