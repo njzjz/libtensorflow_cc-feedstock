@@ -8,7 +8,7 @@
 # This is the recipe for the "gpu" variant of tensorflow-base
 package:
   name: libtensorflow_cc
-  version: {{ version }}
+  version: {{ version | replace("-", "_") }}
 
 source:
   fn: tensorflow-{{ version }}.tar.gz
