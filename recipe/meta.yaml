@@ -15,9 +15,7 @@ source:
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
   sha256: 638e541a4981f52c69da4a311815f1e7989bf1d67a41d204511966e1daed14f7
   patches:
-    #- 0001-rebatch-constants.patch
     - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
-    #- 58b236b235ce57808c917feb19b9f895f628710c.diff
 
 build:
   number: 0
