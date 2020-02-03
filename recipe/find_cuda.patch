@@ -1,0 +1,12 @@
+diff --git a/third_party/gpus/find_cuda_config.py b/third_party/gpus/find_cuda_config.py
+index 39f2c21d3f..03022950ff 100644
+--- a/third_party/gpus/find_cuda_config.py
++++ b/third_party/gpus/find_cuda_config.py
+@@ -249,6 +249,7 @@ def _find_cuda_config(base_paths, required_version):
+   cuda_header_path, header_version = _find_header(base_paths, "cuda.h",
+                                                   required_version,
+                                                   get_header_version)
++  cuda_header_path = os.path.realpath(cuda_header_path)
+   cuda_version = header_version  # x.y, see above.
+ 
+   cuda_library_path = _find_library(base_paths, "cudart", cuda_version)
