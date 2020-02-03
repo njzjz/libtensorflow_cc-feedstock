@@ -24,6 +24,7 @@ build:
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
   skip: True  # [not linux]
+  skip: True  # [not py==37]
 
 requirements:
   build:

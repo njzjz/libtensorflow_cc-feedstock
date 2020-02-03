@@ -1,5 +1,3 @@
-mkdir -p ${SP_DIR}
-
 if [ ${cuda_compiler_version} == "None" ]; then
   bash $RECIPE_DIR/build_cpu.sh
 fi
