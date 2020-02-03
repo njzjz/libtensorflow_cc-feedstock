@@ -35,6 +35,8 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}*  # [cuda_compiler_version != 'None']
     - cudnn {{ cudnn }}*  # [cuda_compiler_version != 'None']
     - cupti  # [cuda_compiler_version != 'None']
+    - python
+    - numpy
   run:
     - {{ pin_compatible('cudatoolkit', max_pin='x.x') }}  # [cuda_compiler_version != 'None']
     - {{ pin_compatible('cudnn') }}  # [cuda_compiler_version != 'None']
