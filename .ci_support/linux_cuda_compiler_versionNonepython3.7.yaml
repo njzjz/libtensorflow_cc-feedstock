@@ -11,7 +11,7 @@ cuda_compiler:
 cuda_compiler_version:
 - None
 cudatoolkit:
-- '10.0'
+- '10.1'
 cudnn:
 - '7.6'
 cxx_compiler:

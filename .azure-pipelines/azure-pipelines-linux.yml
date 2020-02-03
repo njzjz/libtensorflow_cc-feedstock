@@ -10,10 +10,10 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      linux_cuda_compiler_version10.0python3.7:
-        CONFIG: linux_cuda_compiler_version10.0python3.7
+      linux_cuda_compiler_version10.1python3.7:
+        CONFIG: linux_cuda_compiler_version10.1python3.7
         UPLOAD_PACKAGES: True
-        DOCKER_IMAGE: condaforge/linux-anvil-cuda:10.0
+        DOCKER_IMAGE: condaforge/linux-anvil-cuda:10.1
       linux_cuda_compiler_versionNonepython3.7:
         CONFIG: linux_cuda_compiler_versionNonepython3.7
         UPLOAD_PACKAGES: True

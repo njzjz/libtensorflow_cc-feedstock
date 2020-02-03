@@ -9,9 +9,9 @@ channel_targets:
 cuda_compiler:
 - nvcc
 cuda_compiler_version:
-- '10.0'
+- '10.1'
 cudatoolkit:
-- '10.0'
+- '10.1'
 cudnn:
 - '7.6'
 cxx_compiler:
@@ -19,7 +19,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '5.4'
 docker_image:
-- condaforge/linux-anvil-cuda:10.0
+- condaforge/linux-anvil-cuda:10.1
 numpy:
 - '1.14'
 pin_run_as_build:
