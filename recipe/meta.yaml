@@ -16,6 +16,7 @@ source:
   sha256: 638e541a4981f52c69da4a311815f1e7989bf1d67a41d204511966e1daed14f7
   patches:
     - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
+    - allow_bazel_0.26.1.patch
 
 build:
   number: 0
