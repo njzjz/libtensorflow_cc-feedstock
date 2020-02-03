@@ -17,7 +17,6 @@ source:
   patches:
     - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
     - allow_bazel_0.26.1.patch
-    - find_cuda.patch
 
 build:
   number: 0
