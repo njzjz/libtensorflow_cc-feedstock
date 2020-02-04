@@ -57,10 +57,9 @@ export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
-cp -r /usr/local/cuda/include/* $PREFIX/include
-cp -r /usr/local/cuda/bin/* $PREFIX/bin
+cp -r /usr/local/cuda/ $PREFIX
 
-export TF_CUDA_PATHS="${PREFIX}"
+export TF_CUDA_PATHS="${PREFIX},${PREFIX}/cuda"
 
 ./configure
 
@@ -104,4 +103,4 @@ rsync -avzh --include '*/' --include '*' --exclude '*.txt' bazel-work/external/e
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-work/external/com_google_protobuf/src/google/ $PREFIX/include/google/
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-work/external/com_google_absl/absl/ $PREFIX/include/absl/
 
-rm -rf ${PREFIX}/bin
+rm -rf ${PREFIX}/cuda
