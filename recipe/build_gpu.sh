@@ -57,7 +57,7 @@ export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
-cp -r /usr/local/cuda/ $PREFIX
+cp -rL /usr/local/cuda/ $PREFIX
 
 export TF_CUDA_PATHS="${PREFIX},${PREFIX}/cuda,/usr"
 
