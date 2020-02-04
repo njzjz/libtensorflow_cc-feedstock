@@ -59,7 +59,7 @@ export GCC_HOST_COMPILER_PATH="${CC}"
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
 cp -r /usr/local/cuda/ $PREFIX
 
-export TF_CUDA_PATHS="${PREFIX},${PREFIX}/cuda"
+export TF_CUDA_PATHS="${PREFIX},${PREFIX}/cuda,/usr"
 
 ./configure
 
