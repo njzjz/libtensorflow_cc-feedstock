@@ -2,6 +2,7 @@
 
 mkdir -p ${PREFIX}/lib/
 mkdir -p ${PREFIX}/include/
+mkdir -p ${PREFIX}/bin/
 
 set -vex
 
@@ -57,6 +58,8 @@ export GCC_HOST_COMPILER_PATH="${CC}"
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
 cp -r /usr/local/cuda/include/* $PREFIX/include
+cp -r /usr/local/cuda/lib64/* $PREFIX/bin
+
 export TF_CUDA_PATHS="${PREFIX}"
 
 ./configure
@@ -100,3 +103,5 @@ rsync -avzh --include '*/' --include '*' --exclude '*.txt' bazel-work/external/e
 rsync -avzh --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $PREFIX/include/unsupported/
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-work/external/com_google_protobuf/src/google/ $PREFIX/include/google/
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-work/external/com_google_absl/absl/ $PREFIX/include/absl/
+
+rm -rf ${PREFIX}/bin
