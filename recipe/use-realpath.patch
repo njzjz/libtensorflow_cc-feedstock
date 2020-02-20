@@ -1,12 +1,19 @@
-diff --git a/third_party/gpus/find_cuda_config.py b/third_party/gpus/find_cuda_config.py
-index 39f2c21d3f..e88409df64 100644
---- a/third_party/gpus/find_cuda_config.py
-+++ b/third_party/gpus/find_cuda_config.py
-@@ -171,6 +171,7 @@ def _header_paths():
-   """Returns hard-coded set of relative paths to look for header files."""
-   return [
-       "",
-+      "targets/x86_64-linux/include",
-       "include",
-       "include/cuda",
-       "include/*-linux-gnu",
+diff --git a/third_party/gpus/cuda_configure.bzl b/third_party/gpus/cuda_configure.bzl
+index af1bc96f00..1355f071ea 100644
+--- a/third_party/gpus/cuda_configure.bzl
++++ b/third_party/gpus/cuda_configure.bzl
+@@ -369,12 +369,12 @@ def _cuda_include_path(repository_ctx, cuda_config):
+                 cuda_config.cuda_toolkit_path + "/" + one_line.replace(
+                     "#$ _TARGET_DIR_=",
+                     "",
+-                ) + "/include"
++                ) + "targets/x86_64-linux/include"
+             )
+     inc_entries = []
+     if target_dir != "":
+         inc_entries.append(target_dir)
+-    inc_entries.append(cuda_config.cuda_toolkit_path + "/include")
++    inc_entries.append(cuda_config.cuda_toolkit_path + "targets/x86_64-linux/include")
+     return inc_entries
+ 
+ def enable_cuda(repository_ctx):
