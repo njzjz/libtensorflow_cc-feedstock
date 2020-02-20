@@ -1,19 +1,12 @@
-diff --git a/third_party/gpus/cuda_configure.bzl b/third_party/gpus/cuda_configure.bzl
-index af1bc96f00..1355f071ea 100644
---- a/third_party/gpus/cuda_configure.bzl
-+++ b/third_party/gpus/cuda_configure.bzl
-@@ -369,12 +369,12 @@ def _cuda_include_path(repository_ctx, cuda_config):
-                 cuda_config.cuda_toolkit_path + "/" + one_line.replace(
-                     "#$ _TARGET_DIR_=",
-                     "",
--                ) + "/include"
-+                ) + "targets/x86_64-linux/include"
-             )
-     inc_entries = []
-     if target_dir != "":
-         inc_entries.append(target_dir)
--    inc_entries.append(cuda_config.cuda_toolkit_path + "/include")
-+    inc_entries.append(cuda_config.cuda_toolkit_path + "targets/x86_64-linux/include")
-     return inc_entries
+diff --git a/third_party/gpus/cuda/BUILD.tpl b/third_party/gpus/cuda/BUILD.tpl
+index 9d17e1b8f3..5c3960226b 100644
+--- a/third_party/gpus/cuda/BUILD.tpl
++++ b/third_party/gpus/cuda/BUILD.tpl
+@@ -48,6 +48,7 @@ cuda_header_library(
+     includes = [
+         ".",  # required to include cuda/cuda/cuda_config.h as cuda/config.h
+         "cuda/include",
++		"/usr/local/cuda/targets/x86_64-linux/include/",
+     ],
+ )
  
- def enable_cuda(repository_ctx):
