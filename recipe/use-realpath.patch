@@ -1,13 +1,12 @@
 diff --git a/third_party/gpus/find_cuda_config.py b/third_party/gpus/find_cuda_config.py
-index 39f2c21d3f..a1f5004144 100644
+index 39f2c21d3f..e88409df64 100644
 --- a/third_party/gpus/find_cuda_config.py
 +++ b/third_party/gpus/find_cuda_config.py
-@@ -202,7 +202,7 @@ def _not_found_error(base_paths, relative_paths, filepattern):
- def _find_file(base_paths, relative_paths, filepattern):
-   for path in _cartesian_product(base_paths, relative_paths):
-     for file in glob.glob(os.path.join(path, filepattern)):
--      return file
-+      return os.path.realpath(file)
-   raise _not_found_error(base_paths, relative_paths, filepattern)
- 
- 
+@@ -171,6 +171,7 @@ def _header_paths():
+   """Returns hard-coded set of relative paths to look for header files."""
+   return [
+       "",
++      "targets/x86_64-linux/include",
+       "include",
+       "include/cuda",
+       "include/*-linux-gnu",
