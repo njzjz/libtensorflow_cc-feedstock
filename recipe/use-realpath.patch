@@ -14,15 +14,15 @@ index af1bc96f00..2fd0bef286 100644
  
  def enable_cuda(repository_ctx):
 diff --git a/third_party/gpus/find_cuda_config.py b/third_party/gpus/find_cuda_config.py
-index 39f2c21d3f..c41e9d551b 100644
+index 39f2c21d3f..57067b3562 100644
 --- a/third_party/gpus/find_cuda_config.py
 +++ b/third_party/gpus/find_cuda_config.py
-@@ -202,7 +202,7 @@ def _not_found_error(base_paths, relative_paths, filepattern):
- def _find_file(base_paths, relative_paths, filepattern):
-   for path in _cartesian_product(base_paths, relative_paths):
-     for file in glob.glob(os.path.join(path, filepattern)):
--      return file
-+      return os.path.realpath(file)
-   raise _not_found_error(base_paths, relative_paths, filepattern)
+@@ -449,7 +449,7 @@ def find_cuda_config():
+   cuda_version = os.environ.get("TF_CUDA_VERSION", "")
+   base_paths = _list_from_env("TF_CUDA_PATHS",
+                               _get_default_cuda_paths(cuda_version))
+-  base_paths = [path for path in base_paths if os.path.exists(path)]
++  base_paths = [os.path.realpath(path) for path in base_paths if os.path.exists(path)]
  
- 
+   result = {}
+   if "cuda" in libraries:
