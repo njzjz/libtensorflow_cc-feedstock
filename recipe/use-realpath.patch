@@ -8,8 +8,8 @@ index af1bc96f00..2fd0bef286 100644
      if target_dir != "":
 -        inc_entries.append(target_dir)
 -    inc_entries.append(cuda_config.cuda_toolkit_path + "/include")
-+        inc_entries.append(repository_ctx.path(target_dir).realpath)
-+    inc_entries.append(repository_ctx.path(cuda_config.cuda_toolkit_path + "/include").realpath)
++        inc_entries.append(str(repository_ctx.path(target_dir).realpath))
++    inc_entries.append(str(repository_ctx.path(cuda_config.cuda_toolkit_path + "/include").realpath))
      return inc_entries
  
  def enable_cuda(repository_ctx):
