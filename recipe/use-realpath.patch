@@ -1,5 +1,5 @@
 diff --git a/third_party/gpus/cuda_configure.bzl b/third_party/gpus/cuda_configure.bzl
-index af1bc96f00..7dbfa8a673 100644
+index af1bc96f00..9ec38a8345 100644
 --- a/third_party/gpus/cuda_configure.bzl
 +++ b/third_party/gpus/cuda_configure.bzl
 @@ -373,8 +373,8 @@ def _cuda_include_path(repository_ctx, cuda_config):
@@ -8,8 +8,8 @@ index af1bc96f00..7dbfa8a673 100644
      if target_dir != "":
 -        inc_entries.append(target_dir)
 -    inc_entries.append(cuda_config.cuda_toolkit_path + "/include")
-+        inc_entries.append(os.path.realpath(target_dir))
-+    inc_entries.append(os.path.realpath(cuda_config.cuda_toolkit_path + "/include"))
++        inc_entries.append(repository_ctx.os.path.realpath(target_dir))
++    inc_entries.append(repository_ctx.os.path.realpath(cuda_config.cuda_toolkit_path + "/include"))
      return inc_entries
  
  def enable_cuda(repository_ctx):
