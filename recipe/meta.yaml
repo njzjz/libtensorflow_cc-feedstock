@@ -20,7 +20,7 @@ source:
 
 build:
   number: 0
-  string: {{ tflow_variant }}_h{{PKG_HASH}}_{{ PKG_BUILDNUM }}
+  string: {{ tflow_variant }}_cuda{{ cuda_compiler_version }}_{{ PKG_BUILDNUM }}
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
   skip: True  # [not linux]
@@ -33,7 +33,7 @@ requirements:
     - bazel
     - rsync
   host:
-    - cudatoolkit {{ cudatoolkit }}*  # [cuda_compiler_version != 'None']
+    - cudatoolkit {{ cuda_compiler_version }}*  # [cuda_compiler_version != 'None']
     - cudnn {{ cudnn }}*  # [cuda_compiler_version != 'None']
     - cupti  # [cuda_compiler_version != 'None']
     - python
