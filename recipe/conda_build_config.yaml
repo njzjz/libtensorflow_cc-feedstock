@@ -2,8 +2,6 @@ c_compiler_version:
 - 5.4
 cxx_compiler_version:
 - 5.4
-cudatoolkit:
-- 10.1
 cudnn:
 - 7.6
 channel_sources:
