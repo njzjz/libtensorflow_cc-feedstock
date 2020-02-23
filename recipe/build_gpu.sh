@@ -40,23 +40,13 @@ export TF_CUDA_CLANG=0
 export TF_NEED_TENSORRT=0
 # Additional compute capabilities can be added if desired but these increase
 # the build time and size of the package.
-if [ ${cudatoolkit} == "9.0" ]; then
-    export TF_CUDA_COMPUTE_CAPABILITIES="3.0,3.5,5.2,6.0,6.1,7.0"
-fi
-if [ ${cudatoolkit} == "9.2" ]; then
-    export TF_CUDA_COMPUTE_CAPABILITIES="3.0,3.5,5.2,6.0,6.1,7.0"
-fi
-if [ ${cudatoolkit} == "10.0" ]; then
-    export TF_CUDA_COMPUTE_CAPABILITIES="3.0,3.5,5.2,6.0,6.1,7.0,7.5"
-fi
-if [ ${cudatoolkit} == "10.1" ]; then
-    export TF_CUDA_COMPUTE_CAPABILITIES="3.0,3.5,5.2,6.0,6.1,7.0,7.5"
-fi
+export TF_CUDA_COMPUTE_CAPABILITIES="6.0"
 export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
-export TF_CUDA_PATHS="${PREFIX},/usr/local/cuda"
+
+export TF_CUDA_PATHS="${PREFIX},/usr/local/cuda,/usr"
 
 ./configure
 
