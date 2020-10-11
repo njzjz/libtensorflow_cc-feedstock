@@ -7,9 +7,6 @@ set -vex
 
 # expand PREFIX in BUILD file
 sed -i -e "s:\${PREFIX}:${PREFIX}:" tensorflow/core/platform/default/build_config/BUILD
-# TF added a patch in 2.0 release: https://github.com/tensorflow/tensorflow/blob/9621ac4de0864be4e44a298edef6a9c3637849a3/third_party/nccl/archive.patch
-#    We extend that to add on our NCCL socket patch for older kernels
-cp $RECIPE_DIR/nccl_archive.patch third_party/nccl/archive.patch
 
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS=""
@@ -34,23 +31,32 @@ export TF_SET_ANDROID_WORKSPACE=0
 
 # CUDA details
 export TF_NEED_CUDA=1
-export TF_CUDA_VERSION="${cudatoolkit}"
+export TF_CUDA_VERSION="${cuda_compiler_version}"
 export TF_CUDNN_VERSION="${cudnn}"
 export TF_CUDA_CLANG=0
 export TF_NEED_TENSORRT=0
 # Additional compute capabilities can be added if desired but these increase
 # the build time and size of the package.
-if [ ${cudatoolkit} == "9.0" ]; then
+if [[ ${cuda_compiler_version} == "9.0" ]]; then
 	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0"
 fi
-if [ ${cudatoolkit} == "9.2" ]; then
+if [[ ${cuda_compiler_version} == "9.2" ]]; then
 	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0"
 fi
-if [[ ${cudatoolkit} == 10.* ]]; then
+if [[ ${cuda_compiler_version} == 10.* ]]; then
 	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0,7.5"
 fi
 export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
+export GCC_HOST_COMPILER_PREFIX=$(dirname "${CC}")
+
+# link binutils
+for ii in addr2line ar as c++filt dwp elfedit gprof ld nm objcopy objdump ranlib readelf size strings strip
+do
+	ln -s ${GCC_HOST_COMPILER_PREFIX}/x86_64-conda_cos6-linux-gnu-${ii} ${GCC_HOST_COMPILER_PREFIX}/${ii}
+done
+
+
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
 
@@ -89,7 +95,7 @@ cp -d $PREFIX/lib/libtensorflow_framework.so.2 $PREFIX/lib/libtensorflow_framewo
 mkdir -p $PREFIX/include
 mkdir -p $PREFIX/include/tensorflow
 # copy headers
-rsync -avzh --exclude '_virtual_includes/' --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-genfiles/ $PREFIX/include/
+rsync -avzh --exclude '_virtual_includes/' --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-bin/ $PREFIX/include/
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/cc $PREFIX/include/tensorflow/
 rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/core $PREFIX/include/tensorflow/
 rsync -avzh --include '*/' --include '*' --exclude '*.cc' third_party/ $PREFIX/include/third_party/

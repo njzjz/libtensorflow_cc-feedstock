@@ -1,0 +1,10 @@
+diff --git a/.bazelrc b/.bazelrc
+index f11c376df6..0d653c22a0 100644
+--- a/.bazelrc
++++ b/.bazelrc
+@@ -517,3 +517,5 @@ try-import %workspace%/.tf_configure.bazelrc
+ 
+ # Put user-specific options in .bazelrc.user
+ try-import %workspace%/.bazelrc.user
++build:opt --copt=-DNO_CONSTEXPR_FOR_YOU=1
++build:opt --host_copt=-DNO_CONSTEXPR_FOR_YOU=1
