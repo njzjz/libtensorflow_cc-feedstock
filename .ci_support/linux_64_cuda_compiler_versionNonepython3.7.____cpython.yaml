@@ -2,6 +2,8 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '5.4'
+cdt_name:
+- cos6
 channel_sources:
 - deepmodeling,defaults
 channel_targets:
@@ -36,3 +38,5 @@ zip_keys:
   - cxx_compiler_version
 - - cuda_compiler_version
   - docker_image
+- - python
+  - numpy
