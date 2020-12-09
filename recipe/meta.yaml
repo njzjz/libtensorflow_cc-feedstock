@@ -1,5 +1,4 @@
-{% set version = "2.3.0" %}
-
+{% set version = "2.4.0-rc4" %}
 {% if cuda_compiler_version == "None" %}
 {% set tflow_variant = "cpu" %}
 {% else %}
@@ -13,7 +12,7 @@ package:
 source:
   fn: tensorflow-{{ version }}.tar.gz
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
-  sha256: 2595a5c401521f20a2734c4e5d54120996f8391f00bb62a57267d930bce95350
+  #sha256: 2595a5c401521f20a2734c4e5d54120996f8391f00bb62a57267d930bce95350
   patches:
     - 0002-do-not-include-B-usr-bin-flag.patch  # [cuda_compiler_version != 'None']
     - realpath.patch
