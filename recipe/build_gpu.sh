@@ -49,6 +49,9 @@ fi
 if [[ ${cuda_compiler_version} == 11.* ]]; then
 	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0,7.5,8.0,8.6"
 fi
+if [[ ${cuda_compiler_version} == 11.0 ]]; then
+	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0,7.5,8.0"
+fi
 export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
 export GCC_HOST_COMPILER_PREFIX=$(dirname "${CC}")
