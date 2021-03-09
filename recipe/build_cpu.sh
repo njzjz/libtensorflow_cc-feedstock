@@ -33,11 +33,6 @@ export USE_DEFAULT_PYTHON_LIB_PATH=1
 
 export GCC_HOST_COMPILER_PATH="${CC}"
 export GCC_HOST_COMPILER_PREFIX=$(dirname "${CC}")
-# link binutils
-for ii in addr2line ar as c++filt dwp elfedit gprof ld nm objcopy objdump ranlib readelf size strings strip
-do
-	ln -s ${GCC_HOST_COMPILER_PREFIX}/x86_64-conda_cos6-linux-gnu-${ii} ${GCC_HOST_COMPILER_PREFIX}/${ii}
-done
 
 # additional settings
 # do not build with MKL support

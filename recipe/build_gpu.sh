@@ -46,16 +46,12 @@ fi
 if [[ ${cuda_compiler_version} == 10.* ]]; then
 	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0,7.5"
 fi
+if [[ ${cuda_compiler_version} == 11.* ]]; then
+	    export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.0,6.1,7.0,7.5,8.0,8.6"
+fi
 export TF_NCCL_VERSION=""
 export GCC_HOST_COMPILER_PATH="${CC}"
 export GCC_HOST_COMPILER_PREFIX=$(dirname "${CC}")
-
-# link binutils
-for ii in addr2line ar as c++filt dwp elfedit gprof ld nm objcopy objdump ranlib readelf size strings strip
-do
-	ln -s ${GCC_HOST_COMPILER_PREFIX}/x86_64-conda_cos6-linux-gnu-${ii} ${GCC_HOST_COMPILER_PREFIX}/${ii}
-done
-
 
 # Use system paths here rather than $PREFIX to allow Bazel to find the correct
 # libraries.  RPATH is adjusted post build to link to the DSOs in $PREFIX
