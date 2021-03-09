@@ -1,0 +1,134 @@
+diff --git a/third_party/eigen3/gpu_packet_math.patch b/third_party/eigen3/gpu_packet_math.patch
+old mode 100644
+new mode 100755
+index c0f466c24d3..193404dd990
+--- a/third_party/eigen3/gpu_packet_math.patch
++++ b/third_party/eigen3/gpu_packet_math.patch
+@@ -1,32 +1,8 @@
+-diff -ru a/Eigen/src/Geometry/arch/Geometry_SSE.h b/Eigen/src/Geometry/arch/Geometry_SSE.h
+---- a/Eigen/src/Geometry/arch/Geometry_SSE.h
+-+++ b/Eigen/src/Geometry/arch/Geometry_SSE.h
+-@@ -33,13 +33,14 @@
+-     Packet4f b = be.template packet<BAlignment,Packet4f>(0);
+-     Packet4f s1 = pmul(vec4f_swizzle1(a,1,2,0,2),vec4f_swizzle1(b,2,0,1,2));
+-     Packet4f s2 = pmul(vec4f_swizzle1(a,3,3,3,1),vec4f_swizzle1(b,0,1,2,1));
+--    pstoret<float,Packet4f,ResAlignment>(
+--              &res.x(),
+--              padd(psub(pmul(a,vec4f_swizzle1(b,3,3,3,3)),
+--                                    pmul(vec4f_swizzle1(a,2,0,1,0),
+--                                               vec4f_swizzle1(b,1,2,0,0))),
+--                         pxor(mask,padd(s1,s2))));
+--    
+-+    pstoret<float, Packet4f, ResAlignment>(
+-+        &res.x(),
+-+        padd<Packet4f>(
+-+            psub<Packet4f>(pmul<Packet4f>(a, vec4f_swizzle1(b, 3, 3, 3, 3)),
+-+                           pmul<Packet4f>(vec4f_swizzle1(a, 2, 0, 1, 0),
+-+                                          vec4f_swizzle1(b, 1, 2, 0, 0))),
+-+            pxor<Packet4f>(mask, padd(s1, s2))));
+-+
+-     return res;
+-   }
+- };
+-diff -ru a/Eigen/src/Core/GenericPacketMath.h b/Eigen/src/Core/GenericPacketMath.h
++diff --git a/Eigen/src/Core/GenericPacketMath.h b/Eigen/src/Core/GenericPacketMath.h
++index fad9453..d8bbc76 100644
+ --- a/Eigen/src/Core/GenericPacketMath.h
+ +++ b/Eigen/src/Core/GenericPacketMath.h
+-@@ -255,49 +255,43 @@
++@@ -255,49 +255,43 @@ EIGEN_DEVICE_FUNC inline std::complex<RealScalar> ptrue(const std::complex<RealS
+    return std::complex<RealScalar>(b, b);
+  }
+  
+@@ -96,3 +72,91 @@ diff -ru a/Eigen/src/Core/GenericPacketMath.h b/Eigen/src/Core/GenericPacketMath
+  }
+  
+  /** \internal \returns the bitwise and of \a a and not \a b */
++diff --git a/Eigen/src/Geometry/arch/Geometry_SSE.h b/Eigen/src/Geometry/arch/Geometry_SSE.h
++index 108cc9f..43677f4 100644
++--- a/Eigen/src/Geometry/arch/Geometry_SSE.h
+++++ b/Eigen/src/Geometry/arch/Geometry_SSE.h
++@@ -33,13 +33,14 @@ struct quat_product<Architecture::SSE, Derived, OtherDerived, float>
++     Packet4f b = be.template packet<BAlignment,Packet4f>(0);
++     Packet4f s1 = pmul(vec4f_swizzle1(a,1,2,0,2),vec4f_swizzle1(b,2,0,1,2));
++     Packet4f s2 = pmul(vec4f_swizzle1(a,3,3,3,1),vec4f_swizzle1(b,0,1,2,1));
++-    pstoret<float,Packet4f,ResAlignment>(
++-              &res.x(),
++-              padd(psub(pmul(a,vec4f_swizzle1(b,3,3,3,3)),
++-                                    pmul(vec4f_swizzle1(a,2,0,1,0),
++-                                               vec4f_swizzle1(b,1,2,0,0))),
++-                         pxor(mask,padd(s1,s2))));
++-    
+++    pstoret<float, Packet4f, ResAlignment>(
+++        &res.x(),
+++        padd<Packet4f>(
+++            psub<Packet4f>(pmul<Packet4f>(a, vec4f_swizzle1(b, 3, 3, 3, 3)),
+++                           pmul<Packet4f>(vec4f_swizzle1(a, 2, 0, 1, 0),
+++                                          vec4f_swizzle1(b, 1, 2, 0, 0))),
+++            pxor<Packet4f>(mask, padd(s1, s2))));
+++
++     return res;
++   }
++ };
++diff --git a/unsupported/Eigen/CXX11/src/Tensor/TensorChipping.h b/unsupported/Eigen/CXX11/src/Tensor/TensorChipping.h
++index 5b28e70..386022c 100644
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorChipping.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorChipping.h
++@@ -263,7 +263,9 @@ struct TensorEvaluator<const TensorChippingOp<DimId, ArgType>, Device>
++         EIGEN_ALIGN_MAX typename internal::remove_const<CoeffReturnType>::type values[PacketSize];
++        EIGEN_UNROLL_LOOP
++         for (int i = 0; i < PacketSize; ++i) {
++-          values[i] = coeff(index);
+++          auto a = coeff(index);
+++          values[i] = a;
+++          // values[i] = coeff(index);
++           ++index;
++         }
++         PacketReturnType rslt = internal::pload<PacketReturnType>(values);
++diff --git a/unsupported/Eigen/CXX11/src/Tensor/TensorConcatenation.h b/unsupported/Eigen/CXX11/src/Tensor/TensorConcatenation.h
++index 5968ff4..434b8aa 100644
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorConcatenation.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorConcatenation.h
++@@ -271,7 +271,9 @@ struct TensorEvaluator<const TensorConcatenationOp<Axis, LeftArgType, RightArgTy
++     EIGEN_ALIGN_MAX CoeffReturnType values[packetSize];
++     EIGEN_UNROLL_LOOP
++     for (int i = 0; i < packetSize; ++i) {
++-      values[i] = coeff(index+i);
+++      auto a = coeff(index+i);
+++      values[i] = a;
+++      // values[i] = coeff(index+i);
++     }
++     PacketReturnType rslt = internal::pload<PacketReturnType>(values);
++     return rslt;
++diff --git a/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h b/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
++index 49d1004..e3f3422 100644
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
++@@ -543,7 +543,9 @@ struct TensorEvaluator<const TensorImagePatchOp<Rows, Cols, ArgType>, Device>
++     EIGEN_ALIGN_MAX typename internal::remove_const<CoeffReturnType>::type values[PacketSize];
++     EIGEN_UNROLL_LOOP
++     for (int i = 0; i < PacketSize; ++i) {
++-      values[i] = coeff(index+i);
+++      auto a = coeff(index+i);
+++      values[i] = a;
+++      // values[i] = coeff(index+i);
++     }
++     PacketReturnType rslt = internal::pload<PacketReturnType>(values);
++     return rslt;
++diff --git a/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h b/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
++index 0a65591..e3cc0c8 100644
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
++@@ -815,8 +815,10 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
++       const Index firstIndex = firstInput(index);
++       for (Index i = 0; i < PacketSize; ++i) {
++         Op reducer(m_reducer);
++-        values[i] = internal::InnerMostDimReducer<Self, Op>::reduce(*this, firstIndex + i * num_values_to_reduce,
++-                                                                    num_values_to_reduce, reducer);
+++        Self::CoeffReturnType a = internal::InnerMostDimReducer<Self, Op>::reduce(*this, firstIndex + i * num_values_to_reduce, num_values_to_reduce, reducer);
+++        values[i] = a;
+++        // values[i] = internal::InnerMostDimReducer<Self, Op>::reduce(*this, firstIndex + i * num_values_to_reduce,
+++        //                                                             num_values_to_reduce, reducer);
++       }
++     } else if (PreservingInnerMostDims) {
++       const Index firstIndex = firstInput(index);

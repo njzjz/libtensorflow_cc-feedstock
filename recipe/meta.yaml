@@ -22,6 +22,7 @@ source:
     - 0107-do-not-hardcode-ca-cert-location.patch          # [linux]
     - 0201-add-additional-cuda-rpaths.patch                # [linux]
     - 0202-Remove-extra-null-terminators.patch             # [linux]
+    - eigen3.patch
 
 build:
   number: 0
