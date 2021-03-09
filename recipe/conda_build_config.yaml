@@ -35,9 +35,9 @@ cdt_name:
 - cos6
 - cos6
 - cos6
-- cos6
-- cos6
-- cos6
+- cos7
+- cos7
+- cos7
 zip_keys:
   - - cudnn
     - cuda_compiler_version
